@@ -1,0 +1,143 @@
+#main-toolbar {
+    min-height: 100px;
+    padding: 0 !important;
+}
+
+#main-toolbar .toolbar-wrapper {
+    width: 100% !important;
+    flex: 1 1 auto !important;
+}
+
+#main-toolbar .toolbar-wrapper .toolbar-column.left {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+#main-toolbar .toolbar-wrapper .toolbar-column.center,
+#main-toolbar .toolbar-wrapper .toolbar-column.right {
+    display: none !important;
+    width: 0 !important;
+    flex: 0 0 0 !important;
+}
+
+#main-toolbar .toolbar-item[data-id="zumito-ribbon"],
+#main-toolbar .toolbar-item#zumito-ribbon {
+    width: 100% !important;
+    flex: 1 1 auto !important;
+}
+
+.zumito-ribbon {
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    font-size: var(--theia-ui-font-size1, 12px);
+    width: 100%;
+    height: 100%;
+    background: var(--theia-toolbar-background, var(--theia-editor-background));
+}
+
+.zumito-ribbon-tabs {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: var(--theia-titleBar-activeBackground, transparent);
+    padding: 0 4px;
+    min-height: 28px;
+}
+
+.zumito-ribbon-tab {
+    background: none;
+    border: none;
+    color: var(--theia-titleBar-activeForeground, var(--theia-foreground));
+    font-size: var(--theia-ui-font-size1, 12px);
+    padding: 4px 14px;
+    cursor: pointer;
+    border-radius: 3px 3px 0 0;
+    position: relative;
+    bottom: -1px;
+}
+
+.zumito-ribbon-tab:hover {
+    background: var(--theia-toolbar-hoverBackground, rgba(128,128,128,0.1));
+}
+
+.zumito-ribbon-tab.active {
+    background: var(--theia-toolbar-background, var(--theia-editor-background));
+    border: 1px solid var(--theia-toolbar-border, var(--theia-sideBar-border));
+    border-bottom: 1px solid var(--theia-toolbar-background, var(--theia-editor-background));
+    font-weight: 600;
+}
+
+.zumito-ribbon-spacer {
+    flex: 1;
+}
+
+.zumito-ribbon-groups {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    padding: 4px 6px;
+    min-height: 66px;
+}
+
+.zumito-ribbon-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2px 8px;
+    border-right: 1px solid var(--theia-toolbar-border, var(--theia-sideBar-border));
+}
+
+.zumito-ribbon-group:last-child {
+    border-right: none;
+}
+
+.zumito-ribbon-buttons {
+    display: flex;
+    gap: 2px;
+    flex: 1;
+}
+
+.zumito-ribbon-button {
+    background: none;
+    border: none;
+    color: var(--theia-titleBar-activeForeground, var(--theia-foreground));
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    min-width: 48px;
+    min-height: 48px;
+    justify-content: center;
+}
+
+.zumito-ribbon-button:hover {
+    background: var(--theia-toolbar-hoverBackground, rgba(128,128,128,0.15));
+}
+
+.zumito-ribbon-button:active {
+    background: var(--theia-toolbar-activeBackground, rgba(128,128,128,0.25));
+}
+
+.zumito-ribbon-button .codicon {
+    font-size: 18px;
+}
+
+.zumito-ribbon-button-label {
+    font-size: 10px;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.zumito-ribbon-group-label {
+    font-size: 9px;
+    color: var(--theia-descriptionForeground, var(--theia-foreground));
+    text-align: center;
+    margin-top: 2px;
+    padding-top: 2px;
+    white-space: nowrap;
+}
