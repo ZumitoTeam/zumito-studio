@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "name": "zumito-ext",
+  "version": "0.1.0",
+  "description": "Zumito Studio - Custom IDE features for Zumito Framework",
+  "dependencies": {
+    "@theia/core": "1.73.0-next.2",
+    "@theia/navigator": "1.73.0-next.2",
+    "@theia/plugin-ext": "1.73.0-next.2",
+    "@theia/workspace": "1.73.0-next.2",
+    "inversify": "^6.2.2"
+  },
+  "devDependencies": {
+    "rimraf": "^2.7.1",
+    "typescript": "^4.9.5"
+  },
+  "theiaExtensions": [
+    {
+      "frontend": "lib/browser/zumito-frontend-module"
+    }
+  ],
+  "scripts": {
+    "clean": "rimraf lib *.tsbuildinfo",
+    "build": "tsc -b",
+    "lint": "eslint --ext js,jsx,ts,tsx src",
+    "lint:fix": "eslint --ext js,jsx,ts,tsx src --fix"
+  }
+}
