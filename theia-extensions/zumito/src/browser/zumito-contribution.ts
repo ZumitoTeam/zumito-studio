@@ -58,7 +58,10 @@ export class ZumitoContribution implements FrontendApplicationContribution {
     onStart(_app: FrontendApplication): void {
         this.pluginViewRegistry.registerViewWelcome({
             view: 'explorer',
-            content: 'No project is open. Get started with Zumito:\n\n[Create Zumito Project](command:zumito-cli.createProject)\n[Open Folder](command:workbench.action.files.openFileFolder)',
+            content:
+                'No project is open. Get started with Zumito:\n\n' +
+                '[Create Zumito Project](command:zumito-cli.createProject)\n' +
+                '[Open Folder](command:workbench.action.files.openFileFolder)',
             when: 'workspaceFolderCount == 0',
             order: 0
         });
@@ -117,7 +120,7 @@ export class ZumitoContribution implements FrontendApplicationContribution {
     private listenPostMessage(): void {
         this.messageListener = (event: MessageEvent) => {
             const data = event.data;
-            if (!data || typeof data !== 'object' || !data.zumito) return;
+            if (!data || typeof data !== 'object' || !data.zumito) {return; }
 
             const cmd = data.zumito;
             switch (cmd) {
@@ -150,7 +153,7 @@ export class ZumitoContribution implements FrontendApplicationContribution {
 
     /* ── Try direct injection into same-origin iframes ── */
     private watchIframes(): void {
-        this.domObserver = new MutationObserver((mutations) => {
+        this.domObserver = new MutationObserver(mutations => {
             for (const m of mutations) {
                 for (const node of Array.from(m.addedNodes)) {
                     if (node instanceof HTMLIFrameElement) {
@@ -175,13 +178,13 @@ export class ZumitoContribution implements FrontendApplicationContribution {
     }
 
     private tryInjectIntoIframe(frame: HTMLIFrameElement): void {
-        const inject = () => {
+        const doInject = () => {
             try {
                 const win = frame.contentWindow;
                 const doc = frame.contentDocument;
-                if (!win || !doc) return;
+                if (!win || !doc) {return; }
                 // Only inject if same-origin
-                if (!doc.defaultView) return;
+                if (!doc.defaultView) {return; }
 
                 const script = doc.createElement('script');
                 script.textContent = BRIDGE_SCRIPT;
@@ -192,9 +195,8 @@ export class ZumitoContribution implements FrontendApplicationContribution {
         };
 
         // Inject on load
-        frame.addEventListener('load', inject);
-        this.toDispose.push(Disposable.create(() => frame.removeEventListener('load', inject)));
-        // Also try immediately in case already loaded
-        inject();
+        frame.addEventListener('load', doInject);
+        this.toDispose.push(Disposable.create(() => frame.removeEventListener('load', doInject)));
+        doInject();
     }
 }

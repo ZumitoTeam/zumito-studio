@@ -338,10 +338,13 @@ export class DbExplorerWidget extends ReactWidget {
         const fields = collection?.fields || [];
         const doc = s.editingDoc || {};
         const allKeys = Object.keys(doc).filter(k => k !== '_s' && k !== '_dt' && k !== '_uid');
-        const displayFields = fields.length > 0 ? fields : allKeys.map(k => ({ name: k, propertyKey: k, type: 'any' as const, primary: false, unique: false, nullable: true, default: undefined }));
+        const displayFields = fields.length > 0 ? fields : allKeys.map(k => ({
+            name: k, propertyKey: k, type: 'any' as const,
+            primary: false, unique: false, nullable: true, default: undefined
+        }));
 
         return (
-            <div className='db-explorer-modal-overlay' onClick={e => { if ((e.target as HTMLElement).className === 'db-explorer-modal-overlay') this.closeModal(); }}>
+            <div className='db-explorer-modal-overlay' onClick={e => { if ((e.target as HTMLElement).className === 'db-explorer-modal-overlay') {this.closeModal(); } }}>
                 <div className='db-explorer-modal'>
                     <div className='db-explorer-modal-header'>
                         <span>{s.isNew ? 'New Document' : 'Edit Document'} / {s.selectedCollection}</span>
@@ -422,7 +425,7 @@ export class DbExplorerWidget extends ReactWidget {
     /* ── RPC helpers ── */
     protected async connect(): Promise<void> {
         const root = this.workspaceService.tryGetRoots()[0]?.resource.path.fsPath();
-        if (!root) return;
+        if (!root) {return; }
 
         this.setState({ connecting: true });
         try {
@@ -458,7 +461,7 @@ export class DbExplorerWidget extends ReactWidget {
 
     protected async applyQuery(): Promise<void> {
         const s = this.state;
-        if (!s.selectedCollection) return;
+        if (!s.selectedCollection) {return; }
 
         try {
             const svc = this.service;
@@ -542,23 +545,23 @@ export class DbExplorerWidget extends ReactWidget {
         const collection = this.state.collections.find(c => c.name === this.state.selectedCollection);
         const empty: Record<string, any> = {};
         (collection?.fields || []).forEach(f => {
-            if (f.default !== undefined) empty[f.name] = f.default;
-            else if (f.type === 'boolean') empty[f.name] = false;
-            else if (f.type === 'number') empty[f.name] = 0;
-            else if (f.nullable) empty[f.name] = null;
-            else empty[f.name] = '';
+            if (f.default !== undefined) { empty[f.name] = f.default; }
+            else if (f.type === 'boolean') { empty[f.name] = false; }
+            else if (f.type === 'number') { empty[f.name] = 0; }
+            else if (f.nullable) { empty[f.name] = null; }
+            else { empty[f.name] = ''; }
         });
         this.setState({ editingDoc: empty, isNew: true });
     }
 
     protected updateEditingDoc(field: string, value: any): void {
-        if (!this.state.editingDoc) return;
+        if (!this.state.editingDoc) {return; }
         this.setState({ editingDoc: { ...this.state.editingDoc, [field]: value } });
     }
 
     protected async saveDocument(): Promise<void> {
         const doc = this.state.editingDoc;
-        if (!doc || !this.state.selectedCollection) return;
+        if (!doc || !this.state.selectedCollection) {return; }
 
         try {
             const svc = this.service;
@@ -567,7 +570,7 @@ export class DbExplorerWidget extends ReactWidget {
             const cleanDoc: Record<string, any> = {};
 
             for (const key of Object.keys(doc)) {
-                if (key === '_s' || key === '_dt' || key === '_uid') continue;
+                if (key === '_s' || key === '_dt' || key === '_uid') {continue; }
                 cleanDoc[key] = doc[key];
             }
 
@@ -591,7 +594,7 @@ export class DbExplorerWidget extends ReactWidget {
     }
 
     protected async deleteDocument(doc: Record<string, any>): Promise<void> {
-        if (!this.state.selectedCollection) return;
+        if (!this.state.selectedCollection) {return; }
 
         try {
             const svc = this.service;

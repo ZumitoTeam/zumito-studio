@@ -126,13 +126,13 @@ export function executeInjectService(
     quickInputService: QuickInputService
 ): void {
     const model = editor.getControl().getModel();
-    if (!model) return;
+    if (!model) {return; }
 
     quickInputService.showQuickPick(COMMON_SERVICES, {
         placeholder: 'Select a service to inject',
         canSelectMany: false,
-    }).then((selected) => {
-        if (!selected) return;
+    }).then(selected => {
+        if (!selected) {return; }
 
         const service = selected as ServiceOption;
         const paramName = service.propertyName ||
@@ -171,7 +171,7 @@ export function executeInjectService(
             importLines.push(`import { ${service.className} } from '${service.importPath}';`);
         }
         if (!hasSCImport) {
-            importLines.push(`import { ServiceContainer } from 'zumito-framework';`);
+            importLines.push('import { ServiceContainer } from \'zumito-framework\';');
         }
         if (importLines.length > 0) {
             edits.push({

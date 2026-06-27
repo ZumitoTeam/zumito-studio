@@ -11,8 +11,8 @@ const loadFrom = (baseDir: string, mod: string): any => {
     if (fs.existsSync(pkgJson)) {
         const { main } = JSON.parse(fs.readFileSync(pkgJson, 'utf8'));
         let entry = path.join(pkgPath, main || 'index.js');
-        if (!path.extname(entry)) entry += '.js';
-        if (fs.existsSync(entry)) return nativeRequire(entry);
+        if (!path.extname(entry)) {entry += '.js'; }
+        if (fs.existsSync(entry)) {return nativeRequire(entry); }
     }
     return nativeRequire(mod);
 };
@@ -38,12 +38,12 @@ class TingoFileDb {
     }
     private filePath(name: string): string {
         const jsonPath = path.join(this.path, name + '.json');
-        if (fs.existsSync(jsonPath)) return jsonPath;
+        if (fs.existsSync(jsonPath)) {return jsonPath; }
         return path.join(this.path, name);
     }
     private readDocs(name: string): any[] {
         const fp = this.filePath(name);
-        if (!fs.existsSync(fp)) return [];
+        if (!fs.existsSync(fp)) {return []; }
         try {
             const content = fs.readFileSync(fp, 'utf8');
             return content.split('\n')
@@ -62,7 +62,7 @@ class TingoFileDb {
     private normalize(doc: any): any {
         const out: any = {};
         for (const key of Object.keys(doc)) {
-            if (key === '_s' || key === '_dt' || key === '_uid') continue;
+            if (key === '_s' || key === '_dt' || key === '_uid') {continue; }
             const val = doc[key];
             if (key === '_id') {
                 if (typeof val === 'object' && val !== null) {
@@ -93,8 +93,8 @@ class TingoFileDb {
         const val = doc[clause.field];
         const cv = clause.value;
         switch (clause.operator) {
-            case 'eq': return val == cv;
-            case 'neq': return val != cv;
+            case 'eq': return val === cv;
+            case 'neq': return val !== cv;
             case 'gt': return val > cv;
             case 'gte': return val >= cv;
             case 'lt': return val < cv;
@@ -105,7 +105,7 @@ class TingoFileDb {
         }
     }
     private applyWhere(docs: any[], where: { field: string; operator: string; value: any; logic?: 'and'|'or' }[]): any[] {
-        if (!where || where.length === 0) return [...docs];
+        if (!where || where.length === 0) {return [...docs]; }
         return docs.filter(doc => {
             let result = this.evalClause(doc, where[0]);
             for (let i = 1; i < where.length; i++) {
@@ -117,15 +117,15 @@ class TingoFileDb {
     }
     find(collection: string, where?: any[]): any[] {
         let docs = this.readDocs(collection);
-        if (where && where.length > 0) docs = this.applyWhere(docs, where);
+        if (where && where.length > 0) {docs = this.applyWhere(docs, where); }
         return docs;
     }
     sort(docs: any[], sorts: { field: string; dir: 'asc'|'desc' }[]): any[] {
         return [...docs].sort((a, b) => {
             for (const s of sorts) {
-                const av = a[s.field], bv = b[s.field];
-                if (av < bv) return s.dir === 'asc' ? -1 : 1;
-                if (av > bv) return s.dir === 'asc' ? 1 : -1;
+                const av = a[s.field]; const bv = b[s.field];
+                if (av < bv) {return s.dir === 'asc' ? -1 : 1; }
+                if (av > bv) {return s.dir === 'asc' ? 1 : -1; }
             }
             return 0;
         });
@@ -173,12 +173,12 @@ export class DbExplorerServiceImpl implements DbExplorerService {
     private projectRoot = '';
 
     async connect(projectRoot: string): Promise<void> {
-        if (this.connected) await this.disconnect();
+        if (this.connected) {await this.disconnect(); }
         this.projectRoot = projectRoot;
 
         const config = this.readConfig(projectRoot);
-        if (!config) throw new Error('Could not read zumito.config.ts');
-        if (!config.drivers[config.default]) throw new Error(`No config found for driver: ${config.default}`);
+        if (!config) {throw new Error('Could not read zumito.config.ts'); }
+        if (!config.drivers[config.default]) {throw new Error(`No config found for driver: ${config.default}`); }
 
         const driverConfig = config.drivers[config.default];
         this.driverName = config.default;
@@ -210,13 +210,13 @@ export class DbExplorerServiceImpl implements DbExplorerService {
     }
 
     async getStatus(): Promise<{ connected: boolean; driver: string; collectionCount: number }> {
-        if (!this.connected) return { connected: false, driver: '', collectionCount: 0 };
+        if (!this.connected) {return { connected: false, driver: '', collectionCount: 0 }; }
         const cols = await this.listAllCollections();
         return { connected: true, driver: this.driverName, collectionCount: cols.length };
     }
 
     async getCollections(): Promise<CollectionInfo[]> {
-        if (!this.connected) return [];
+        if (!this.connected) {return []; }
         const names = await this.listAllCollections();
         const result: CollectionInfo[] = [];
         for (const col of names) {
@@ -232,7 +232,7 @@ export class DbExplorerServiceImpl implements DbExplorerService {
     }
 
     async queryDocuments(opts: QueryOptions): Promise<PaginatedResult> {
-        if (!this.connected) return { documents: [], total: 0, limit: opts.limit || 50, offset: opts.offset || 0 };
+        if (!this.connected) {return { documents: [], total: 0, limit: opts.limit || 50, offset: opts.offset || 0 }; }
         const limit = opts.limit || 50;
         const offset = opts.offset || 0;
         const where = opts.where || [];
@@ -243,24 +243,24 @@ export class DbExplorerServiceImpl implements DbExplorerService {
     }
 
     async getDocument(collection: string, id: any): Promise<Record<string, any> | null> {
-        if (!this.connected) return null;
+        if (!this.connected) {return null; }
         const docs = await this.findDocs(collection, [{ field: '_id', operator: 'eq', value: id }]);
         return docs.length > 0 ? docs[0] : null;
     }
 
     async insertDocument(collection: string, data: Record<string, any>): Promise<Record<string, any>> {
-        if (!this.connected) throw new Error('Not connected');
+        if (!this.connected) {throw new Error('Not connected'); }
         return this.insertDoc(collection, data);
     }
 
     async updateDocument(collection: string, where: Record<string, any>, data: Record<string, any>): Promise<number> {
-        if (!this.connected) return 0;
+        if (!this.connected) {return 0; }
         const clauses = Object.entries(where).map(([field, value]) => ({ field, operator: 'eq' as const, value }));
         return this.updateDocs(collection, clauses, data);
     }
 
     async deleteDocument(collection: string, where: Record<string, any>): Promise<number> {
-        if (!this.connected) return 0;
+        if (!this.connected) {return 0; }
         const clauses = Object.entries(where).map(([field, value]) => ({ field, operator: 'eq' as const, value }));
         return this.deleteDocs(collection, clauses);
     }
@@ -315,18 +315,17 @@ export class DbExplorerServiceImpl implements DbExplorerService {
         return [];
     }
 
-
     private async getCollectionDocs(
         collection: string, limit: number, offset: number,
         where: { field: string; operator: string; value: any }[] = [],
         sort: { field: string; dir: 'asc' | 'desc' }[] = [],
     ): Promise<Record<string, any>[]> {
-        if (this.driverName === 'sqlite') return this.sqliteDocs(collection, limit, offset, where, sort);
+        if (this.driverName === 'sqlite') {return this.sqliteDocs(collection, limit, offset, where, sort); }
         if (this.db instanceof TingoFileDb) {
             let docs = this.db.find(collection, where);
-            if (sort.length > 0) docs = this.db.sort(docs, sort);
-            if (offset > 0) docs = docs.slice(offset);
-            if (limit > 0) docs = docs.slice(0, limit);
+            if (sort.length > 0) {docs = this.db.sort(docs, sort); }
+            if (offset > 0) {docs = docs.slice(offset); }
+            if (limit > 0) {docs = docs.slice(0, limit); }
             return docs;
         }
         // Mongo: existing logic
@@ -335,15 +334,15 @@ export class DbExplorerServiceImpl implements DbExplorerService {
         if (sort.length > 0) {
             results.sort((a, b) => {
                 for (const s of sort) {
-                    const av = a[s.field], bv = b[s.field];
-                    if (av < bv) return s.dir === 'asc' ? -1 : 1;
-                    if (av > bv) return s.dir === 'asc' ? 1 : -1;
+                    const av = a[s.field]; const bv = b[s.field];
+                    if (av < bv) {return s.dir === 'asc' ? -1 : 1; }
+                    if (av > bv) {return s.dir === 'asc' ? 1 : -1; }
                 }
                 return 0;
             });
         }
-        if (offset > 0) results = results.slice(offset);
-        if (limit > 0) results = results.slice(0, limit);
+        if (offset > 0) {results = results.slice(offset); }
+        if (limit > 0) {results = results.slice(0, limit); }
         return results;
     }
 
@@ -355,7 +354,7 @@ export class DbExplorerServiceImpl implements DbExplorerService {
         const params: any[] = [];
         let sql = `SELECT * FROM "${collection}"`;
         const { sql: whereSql, params: whereParams } = this.buildSqlWhere(where, params.length);
-        if (whereSql) sql += ' WHERE ' + whereSql;
+        if (whereSql) {sql += ' WHERE ' + whereSql; }
         params.push(...whereParams);
         if (sort.length > 0) {
             sql += ' ORDER BY ' + sort.map(s => `"${s.field}" ${s.dir.toUpperCase()}`).join(', ');
@@ -366,7 +365,7 @@ export class DbExplorerServiceImpl implements DbExplorerService {
     }
 
     private buildSqlWhere(where: any[], paramOffset: number): { sql: string; params: any[] } {
-        if (!where || where.length === 0) return { sql: '', params: [] };
+        if (!where || where.length === 0) {return { sql: '', params: [] }; }
         const params: any[] = [];
         const clauses = where.map((w, i) => {
             const op = this.sqlOperator(w.operator);
@@ -393,14 +392,14 @@ export class DbExplorerServiceImpl implements DbExplorerService {
         collection: string,
         where: { field: string; operator: string; value: any }[] = [],
     ): Promise<Record<string, any>[]> {
-        if (this.db instanceof TingoFileDb) return this.db.find(collection, where);
-        if (this.driverName === 'sqlite') return this.sqliteDocs(collection, 10000, 0, where, []);
-        if (this.driverName === 'mongo') return this.mongoFind(collection, where);
+        if (this.db instanceof TingoFileDb) {return this.db.find(collection, where); }
+        if (this.driverName === 'sqlite') {return this.sqliteDocs(collection, 10000, 0, where, []); }
+        if (this.driverName === 'mongo') {return this.mongoFind(collection, where); }
         return [];
     }
 
     private buildTingoFilter(where: any[]): Record<string, any> {
-        if (!where || where.length === 0) return {};
+        if (!where || where.length === 0) {return {}; }
         const filter: Record<string, any> = {};
         for (const w of where) {
             if (w.operator === 'eq') {
@@ -423,7 +422,7 @@ export class DbExplorerServiceImpl implements DbExplorerService {
         collection: string,
         where: { field: string; operator: string; value: any }[] = [],
     ): Promise<number> {
-        if (this.db instanceof TingoFileDb) return this.db.count(collection, where);
+        if (this.db instanceof TingoFileDb) {return this.db.count(collection, where); }
         if (this.driverName === 'sqlite') {
             const params: any[] = [];
             let sql = `SELECT COUNT(*) as count FROM "${collection}"`;
@@ -441,7 +440,7 @@ export class DbExplorerServiceImpl implements DbExplorerService {
     }
 
     private async insertDoc(collection: string, data: Record<string, any>): Promise<Record<string, any>> {
-        if (this.db instanceof TingoFileDb) return this.db.insert(collection, data);
+        if (this.db instanceof TingoFileDb) {return this.db.insert(collection, data); }
         if (this.driverName === 'sqlite') {
             const keys = Object.keys(data);
             const vals = keys.map(k => data[k]);
@@ -462,7 +461,7 @@ export class DbExplorerServiceImpl implements DbExplorerService {
         where: { field: string; operator: string; value: any }[],
         data: Record<string, any>,
     ): Promise<number> {
-        if (this.db instanceof TingoFileDb) return this.db.update(collection, where, data);
+        if (this.db instanceof TingoFileDb) {return this.db.update(collection, where, data); }
         if (this.driverName === 'sqlite') {
             const sets = Object.keys(data).map(k => `"${k}" = ?`);
             const vals = Object.keys(data).map(k => data[k]);
@@ -483,7 +482,7 @@ export class DbExplorerServiceImpl implements DbExplorerService {
         collection: string,
         where: { field: string; operator: string; value: any }[],
     ): Promise<number> {
-        if (this.db instanceof TingoFileDb) return this.db.delete(collection, where);
+        if (this.db instanceof TingoFileDb) {return this.db.delete(collection, where); }
         if (this.driverName === 'sqlite') {
             const { sql, params } = this.buildSqlWhere(where, 0);
             const sqlStr = `DELETE FROM "${collection}"${sql ? ' WHERE ' + sql : ''}`;
@@ -501,7 +500,7 @@ export class DbExplorerServiceImpl implements DbExplorerService {
     /* ── Private: config reader ── */
     private readConfig(projectRoot: string): DbConfig | null {
         const configPath = path.join(projectRoot, 'zumito.config.ts');
-        if (!fs.existsSync(configPath)) return null;
+        if (!fs.existsSync(configPath)) {return null; }
 
         try {
             const content = fs.readFileSync(configPath, 'utf8');
@@ -511,31 +510,31 @@ export class DbExplorerServiceImpl implements DbExplorerService {
             if (fs.existsSync(jsPath)) {
                 const mod = nativeRequire(jsPath);
                 const cfg = mod.config || mod.default;
-                if (cfg?.database) return cfg.database;
+                if (cfg?.database) {return cfg.database; }
             }
 
             // Extract database block with brace matching
             const dbIdx = content.indexOf('database');
-            if (dbIdx === -1) return null;
+            if (dbIdx === -1) {return null; }
 
             const blockStart = content.indexOf('{', content.indexOf(':', dbIdx));
-            if (blockStart === -1) return null;
+            if (blockStart === -1) {return null; }
 
             const block = this.extractBraces(content, blockStart);
-            if (!block) return null;
+            if (!block) {return null; }
 
             // Extract default driver
             const defMatch = block.match(/default\s*:\s*['"]([^'"]+)['"]/);
-            if (!defMatch) return null;
+            if (!defMatch) {return null; }
             const driverName = defMatch[1];
 
             // Extract drivers block
             const driversIdx = block.indexOf('drivers');
-            if (driversIdx === -1) return null;
+            if (driversIdx === -1) {return null; }
             const driversStart = block.indexOf('{', driversIdx);
-            if (driversStart === -1) return null;
+            if (driversStart === -1) {return null; }
             const driversBlock = this.extractBraces(block, driversStart);
-            if (!driversBlock) return null;
+            if (!driversBlock) {return null; }
 
             // Extract each driver config
             const drivers: Record<string, Record<string, string>> = {};
@@ -545,17 +544,17 @@ export class DbExplorerServiceImpl implements DbExplorerService {
                 const dName = dm[1];
                 const dBraceStart = dm.index + dm[0].length - 1;
                 const dBlock = this.extractBraces(driversBlock, dBraceStart);
-                if (!dBlock) continue;
+                if (!dBlock) {continue; }
                 const cfg: Record<string, string> = {};
                 const kvRx = /(\w+)\s*:\s*['"]([^'"]+)['"]/g;
                 let kv: RegExpExecArray | null;
                 while ((kv = kvRx.exec(dBlock)) !== null) {
                     cfg[kv[1]] = kv[2];
                 }
-                if (Object.keys(cfg).length > 0) drivers[dName] = cfg;
+                if (Object.keys(cfg).length > 0) {drivers[dName] = cfg; }
             }
 
-            if (!drivers[driverName]) return null;
+            if (!drivers[driverName]) {return null; }
             return { default: driverName, drivers };
         } catch { return null; }
     }
@@ -564,10 +563,9 @@ export class DbExplorerServiceImpl implements DbExplorerService {
     private extractBraces(text: string, openIdx: number): string | null {
         let depth = 0;
         for (let i = openIdx; i < text.length; i++) {
-            if (text[i] === '{') depth++;
-            else if (text[i] === '}') {
+            if (text[i] === '{') {depth++; } else if (text[i] === '}') {
                 depth--;
-                if (depth === 0) return text.substring(openIdx + 1, i);
+                if (depth === 0) {return text.substring(openIdx + 1, i); }
             }
         }
         return null;
@@ -575,19 +573,19 @@ export class DbExplorerServiceImpl implements DbExplorerService {
 }
 
 function inferFields(doc: Record<string, any>): any[] {
-    if (!doc) return [];
+    if (!doc) {return []; }
     const fields: any[] = [];
     for (const [key, val] of Object.entries(doc)) {
-        if (key === '_s' || key === '_dt' || key === '_uid') continue;
+        if (key === '_s' || key === '_dt' || key === '_uid') {continue; }
         let type = 'any';
         const t = typeof val;
-        if (val === null || val === undefined) type = 'any';
-        else if (t === 'string') type = 'string';
-        else if (t === 'number') type = 'number';
-        else if (t === 'boolean') type = 'boolean';
-        else if (val instanceof Date) type = 'date';
-        else if (Array.isArray(val)) type = 'array';
-        else type = 'object';
+        if (val === null || val === undefined) { type = 'any'; }
+        else if (t === 'string') { type = 'string'; }
+        else if (t === 'number') { type = 'number'; }
+        else if (t === 'boolean') { type = 'boolean'; }
+        else if (val instanceof Date) { type = 'date'; }
+        else if (Array.isArray(val)) { type = 'array'; }
+        else { type = 'object'; }
         fields.push({ name: key, propertyKey: key, type, primary: key === '_id' || key === 'id', unique: false, nullable: true, default: undefined });
     }
     return fields;
