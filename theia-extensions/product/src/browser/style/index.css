@@ -8,26 +8,74 @@
  ********************************************************************************/
 
 :root {
-    --theia-branding-logo: url(../icons/TheiaIDE.png);
+    --zumito-accent: #e11d48;
+    --zumito-accent-hover: #be123c;
 }
 
-.theia-icon {
-    background-image: url("../icons/512-512.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+body {
+    --theia-focusBorder: #e11d48 !important;
+    --theia-button-background: #e11d48 !important;
+    --theia-button-hoverBackground: #be123c !important;
+    --theia-badge-background: #e11d48 !important;
+    --theia-progressBar-background: #e11d48 !important;
+    --theia-list-activeSelectionBackground: #e11d4840 !important;
+    --theia-list-activeSelectionForeground: #e11d48 !important;
+    --theia-list-focusAndSelectionBackground: #e11d4840 !important;
+    --theia-list-focusAndSelectionForeground: #e11d48 !important;
+    --theia-list-hoverBackground: #e11d4815 !important;
+    --theia-list-inactiveSelectionBackground: #e11d4830 !important;
+    --theia-inputOption-activeBorder: #e11d48 !important;
+    --theia-inputOption-activeBackground: #e11d4833 !important;
+    --theia-inputOption-activeForeground: #e11d48 !important;
+    --theia-inputValidation-infoBorder: #e11d48 !important;
+    --theia-editor-selectionBackground: #e11d4840 !important;
+    --theia-editorCursor-foreground: #e11d48 !important;
+    --theia-editorLineNumber-activeForeground: #e11d48 !important;
+    --theia-editorBracketMatch-border: #e11d4860 !important;
+    --theia-tab-activeBorderTop: #e11d48 !important;
+    --theia-activityBar-activeBorder: #e11d48 !important;
+    --theia-menubar-selectionBackground: #e11d4830 !important;
+    --theia-menubar-selectionForeground: #e11d48 !important;
+    --theia-toolbar-hoverBackground: #e11d4820 !important;
+    --theia-toolbar-activeBackground: #e11d4830 !important;
+    --theia-quickInputList-focusBackground: #e11d4830 !important;
+    --theia-terminalCursor-background: #e11d48 !important;
+    --theia-terminalCursor-foreground: #e11d48 !important;
+    --theia-link-activeForeground: #e11d48 !important;
+    --theia-statusBar-background: #1e1e1e !important;
+    --theia-statusBar-foreground: #f1f5f9 !important;
+    --theia-statusBarItem-remoteBackground: #e11d4830 !important;
+    --theia-statusBarItem-activeBackground: #e11d4830 !important;
+    --theia-statusBarItem-hoverBackground: #e11d4815 !important;
+    --theia-statusBarItem-prominentBackground: #e11d48 !important;
+    --theia-statusBarItem-prominentForeground: #ffffff !important;
+    --theia-statusBarItem-errorBackground: #e11d48 !important;
+    --theia-badge-background: #e11d48 !important;
+    --theia-badge-foreground: #ffffff !important;
+    --theia-activityBarBadge-background: #e11d48 !important;
+    --theia-activityBarBadge-foreground: #ffffff !important;
+    --theia-scm-inputBorder: #e11d48 !important;
+    --theia-scm-inputBorderFocus: #e11d48 !important;
+    --theia-gitDecoration-addedResourceForeground: #e11d48 !important;
+    --theia-gitDecoration-modifiedResourceForeground: #e11d48 !important;
+    --theia-gitDecoration-deletedResourceForeground: #e11d48 !important;
+    --theia-gitDecoration-untrackedResourceForeground: #e11d48 !important;
+    --theia-gitDecoration-conflictingResourceForeground: #e11d48 !important;
+    --theia-gitDecoration-stageModifiedResourceForeground: #e11d48 !important;
+    --theia-gitDecoration-stageDeletedResourceForeground: #e11d48 !important;
+    --theia-scm-providerBorder: #e11d48 !important;
+    --theia-debugIcon-startForeground: #e11d48 !important;
+    --theia-notificationsInfoIcon-foreground: #e11d48 !important;
+    --theia-notificationsWarningIcon-foreground: #e11d48 !important;
+    --theia-notificationsErrorIcon-foreground: #e11d48 !important;
+    --theia-extensionButton-prominentBackground: #e11d48 !important;
+    --theia-extensionButton-prominentHoverBackground: #be123c !important;
+    --theia-textLink-activeForeground: #e11d48 !important;
+    --theia-textLink-foreground: #e11d48 !important;
 }
 
-body[data-theia-branding="next"] {
-    --theia-branding-logo: url(../icons/TheiaIDE-next.png);
-}
-
-body[data-theia-branding="next"] .theia-icon {
-    background-image: url("../icons/512-512-next.png");
-}
-
-.gs-blue-header {
-    color: #5088e7;
+.gs-rose-header {
+    color: #e11d48;
     text-transform: capitalize;
     font-weight: 600;
 }
@@ -45,41 +93,164 @@ body[data-theia-branding="next"] .theia-icon {
     padding-left: 20px;
 }
 
-.gs-logo {
-    background-image: var(--theia-branding-logo);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 250px;
-    height: 118px;
-    padding: 20px;
+/* ── Bento Grid ── */
+.zb-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 120px;
+    gap: 12px;
+    padding: 8px 0;
+    width: 100%;
 }
 
-.ad-logo {
-    background-image: var(--theia-branding-logo);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 250px;
-    height: 118px;
-    padding: 20px;
-}
-
-.ad-float {
-    float: right;
-}
-
-.ad-container {
-    padding: 20px;
-    width: 1150px;
-    height: 700;
-}
-
-ul.theia-aboutExtensions {
-    height: 450px;
+.zb-card {
+    background: var(--theia-editor-background, #1e1e1e);
+    border: 1px solid var(--theia-panel-border, #333);
+    border-radius: 12px;
+    padding: 18px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
     overflow: hidden;
-    overflow-y: scroll;
-    list-style-type: none;
-    padding: 0;
-    margin-left: 10px;
+}
+
+.zb-card:hover {
+    border-color: #e11d48;
+    background: var(--theia-editorWidget-background, #252526);
+    transform: translateY(-1px);
+}
+
+.zb-card:active {
+    transform: scale(0.98);
+}
+
+.zb-card.zb-hero {
+    grid-column: span 2;
+    grid-row: span 2;
+    background: linear-gradient(135deg, #e11d4822 0%, #f472b615 100%);
+    border-color: #e11d4833;
+}
+
+.zb-card.zb-hero:hover {
+    border-color: #e11d48;
+    background: linear-gradient(135deg, #e11d4833 0%, #f472b622 100%);
+}
+
+.zb-card.zb-wide {
+    grid-column: span 2;
+}
+
+.zb-card.zb-tall {
+    grid-row: span 2;
+}
+
+.zb-card-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #e11d48;
+    opacity: 0.9;
+}
+
+.zb-hero .zb-card-icon {
+    font-size: 32px;
+    margin-bottom: 14px;
+}
+
+.zb-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--theia-foreground, #e0e0e0);
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.zb-hero .zb-card-title {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.zb-card-desc {
+    font-size: 11px;
+    color: var(--theia-descriptionForeground, #888);
+    line-height: 1.4;
+    flex: 1;
+}
+
+.zb-hero .zb-card-desc {
+    font-size: 12px;
+    color: var(--theia-descriptionForeground, #999);
+}
+
+.zb-card-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #e11d48;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.zb-hero-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.zb-hero-actions button {
+    background: var(--theia-button-background, #e11d48);
+    color: var(--theia-button-foreground, #fff);
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.zb-hero-actions button:hover {
+    opacity: 0.85;
+}
+
+.zb-hero-actions button.zb-action-secondary {
+    background: transparent;
+    border: 1px solid var(--theia-panel-border, #444);
+    color: var(--theia-foreground, #e0e0e0);
+}
+
+.zb-hero-actions button.zb-action-secondary:hover {
+    border-color: #e11d48;
+    color: #e11d48;
+}
+
+.zb-card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    text-decoration: none;
+    color: inherit;
+}
+
+.zb-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--theia-descriptionForeground, #666);
+    margin: 16px 0 8px 2px;
+}
+
+/* Responsive: 2 cols on narrow */
+@media (max-width: 700px) {
+    .zb-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

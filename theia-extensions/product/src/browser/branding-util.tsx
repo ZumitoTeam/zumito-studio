@@ -9,7 +9,6 @@
 
 import { WindowService } from '@theia/core/lib/browser/window/window-service';
 import * as React from 'react';
-import { getBrandingVariant } from './theia-ide-config';
 
 export interface ExternalBrowserLinkProps {
     text: string;
@@ -18,17 +17,20 @@ export interface ExternalBrowserLinkProps {
 }
 
 export function renderProductName(): React.ReactNode {
-    const variant = getBrandingVariant();
-    const suffix = variant !== 'stable' ? ` ${variant.charAt(0).toUpperCase() + variant.slice(1)}` : '';
-    return <h1>Eclipse Theia <span className="gs-blue-header">IDE</span>{suffix}</h1>;
+    return <h1>Zumito <span className="gs-rose-header">Studio</span></h1>;
 }
 
 function BrowserLink(props: ExternalBrowserLinkProps): JSX.Element {
     return <a
         role={'button'}
         tabIndex={0}
-        href={props.url}
-        target='_blank'
+        onClick={() => props.windowService.openNewWindow(props.url, { external: true })}
+        onKeyDown={(e: React.KeyboardEvent) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                props.windowService.openNewWindow(props.url, { external: true });
+            }
+        }}
     >
         {props.text}
     </a>;
@@ -37,17 +39,36 @@ function BrowserLink(props: ExternalBrowserLinkProps): JSX.Element {
 export function renderWhatIs(windowService: WindowService): React.ReactNode {
     return <div className='gs-section'>
         <h3 className='gs-section-header'>
-            What is this?
+            What is Zumito Studio?
         </h3>
         <div>
-            The Eclipse Theia IDE is a modern and open IDE for cloud and desktop. The Theia IDE is based on the <BrowserLink text="Theia platform"
-                url="https://theia-ide.org" windowService={windowService} ></BrowserLink>.
+            Zumito Studio is the development environment for creating and managing
+            Discord bots with the <BrowserLink text="Zumito Framework"
+                url="https://github.com/zumito-team/zumito-framework" windowService={windowService} />.
         </div>
         <div>
-            The IDE is available as a <BrowserLink text="downloadable desktop application" url="https://theia-ide.org//#theiaidedownload"
-                windowService={windowService} ></BrowserLink>. You can also <BrowserLink text="try the latest version of the Theia IDE online"
-                    url="https://try.theia-cloud.io/" windowService={windowService} ></BrowserLink>. The online test version is limited to 30 minutes per session and hosted
-            via <BrowserLink text="Theia Cloud" url="https://theia-cloud.io/" windowService={windowService} ></BrowserLink>.
+            Build Discord applications faster with integrated tools for commands,
+            events, modules, embeds, and database models — all within a familiar IDE experience.
+        </div>
+    </div>;
+}
+
+export function renderQuickStart(windowService: WindowService): React.ReactNode {
+    return <div className='gs-section'>
+        <h3 className='gs-section-header'>
+            Quick Start
+        </h3>
+        <div className='gs-action-container'>
+            <span className='codicon codicon-add' />
+            <span style={{ marginLeft: '8px' }}>Create a new Zumito project from the Explorer sidebar</span>
+        </div>
+        <div className='gs-action-container'>
+            <span className='codicon codicon-package' />
+            <span style={{ marginLeft: '8px' }}>Install modules to extend your bot&apos;s functionality</span>
+        </div>
+        <div className='gs-action-container'>
+            <span className='codicon codicon-terminal' />
+            <span style={{ marginLeft: '8px' }}>Use the zumito CLI for scaffolding and management</span>
         </div>
     </div>;
 }
@@ -55,17 +76,17 @@ export function renderWhatIs(windowService: WindowService): React.ReactNode {
 export function renderExtendingCustomizing(windowService: WindowService): React.ReactNode {
     return <div className='gs-section'>
         <h3 className='gs-section-header'>
-            Extending/Customizing the Theia IDE
+            Extending Your Bot
         </h3>
-        <div >
-            You can extend the Theia IDE at runtime by installing VS Code extensions, e.g. from the <BrowserLink text="OpenVSX registry" url="https://open-vsx.org/"
-                windowService={windowService} ></BrowserLink>, an open marketplace for VS Code extensions. Just open the extension view or browse <BrowserLink
-                    text="OpenVSX online" url="https://open-vsx.org/" windowService={windowService} ></BrowserLink>.
+        <div>
+            Install VS Code extensions from the <BrowserLink text="OpenVSX registry" url="https://open-vsx.org/"
+                windowService={windowService} /> to enhance your development experience.
+            Open the extension view or browse <BrowserLink text="OpenVSX online" url="https://open-vsx.org/"
+                windowService={windowService} />.
         </div>
         <div>
-            Furthermore, the Theia IDE is based on the flexible Theia platform. Therefore, the Theia IDE can serve as a <span className='gs-text-bold'>template</span> for building
-            custom tools and IDEs. Browse <BrowserLink text="the documentation" url="https://theia-ide.org/docs/composing_applications/"
-                windowService={windowService} ></BrowserLink> to help you customize and build your own Eclipse Theia-based product.
+            The Zumito Framework is built on the <BrowserLink text="Zumito Framework documentation"
+                url="https://github.com/zumito-team/zumito-framework" windowService={windowService} />.
         </div>
     </div>;
 }
@@ -73,12 +94,11 @@ export function renderExtendingCustomizing(windowService: WindowService): React.
 export function renderSupport(windowService: WindowService): React.ReactNode {
     return <div className='gs-section'>
         <h3 className='gs-section-header'>
-            Professional Support
+            Community & Support
         </h3>
         <div>
-            Professional support, implementation services, consulting and training for building tools like Theia IDE and for building other tools based on Eclipse Theia is
-            available by selected companies as listed on the <BrowserLink text=" Theia support page" url="https://theia-ide.org/support/"
-                windowService={windowService} ></BrowserLink>.
+            Join the <BrowserLink text="Zumito Discord community" url="https://discord.gg/zumito"
+                windowService={windowService} /> for help, updates, and connecting with other developers.
         </div>
     </div>;
 }
@@ -86,20 +106,19 @@ export function renderSupport(windowService: WindowService): React.ReactNode {
 export function renderTickets(windowService: WindowService): React.ReactNode {
     return <div className='gs-section'>
         <h3 className='gs-section-header'>
-            Reporting feature requests and bugs
+            Reporting Issues
         </h3>
-        <div >
-            The features in the Eclipse Theia IDE are based on Theia and the included
-            extensions/plugins. For bugs in Theia please consider opening an issue in
-            the <BrowserLink text="Theia project on Github" url="https://github.com/eclipse-theia/theia/issues/new/choose"
-                windowService={windowService} ></BrowserLink>.
+        <div>
+            Found a bug or have a feature request? Open an issue on
+            the <BrowserLink text="Zumito Framework GitHub"
+                url="https://github.com/zumito-team/zumito-framework/issues/new/choose"
+                windowService={windowService} />.
         </div>
         <div>
-            Eclipse Theia IDE only packages existing functionality into a product and installers
-            for the product. If you believe there is a mistake in packaging, something needs to be added to the
-            packaging or the installers do not work properly,
-            please <BrowserLink text="open an issue on Github" url="https://github.com/eclipse-theia/theia-ide/issues/new/choose"
-                windowService={windowService} ></BrowserLink> to let us know.
+            For issues with Zumito Studio itself, please report them to
+            the <BrowserLink text="Zumito Studio repository"
+                url="https://github.com/zumito-team/zumito-studio/issues/new/choose"
+                windowService={windowService} />.
         </div>
     </div>;
 }
@@ -109,10 +128,10 @@ export function renderSourceCode(windowService: WindowService): React.ReactNode 
         <h3 className='gs-section-header'>
             Source Code
         </h3>
-        <div >
-            The source code of Eclipse Theia IDE is available
-            on <BrowserLink text="Github" url="https://github.com/eclipse-theia/theia-ide"
-                windowService={windowService} ></BrowserLink>.
+        <div>
+            Zumito Studio and the Zumito Framework are open source and available on
+            <BrowserLink text=" GitHub" url="https://github.com/zumito-team"
+                windowService={windowService} />.
         </div>
     </div>;
 }
@@ -122,9 +141,10 @@ export function renderDocumentation(windowService: WindowService): React.ReactNo
         <h3 className='gs-section-header'>
             Documentation
         </h3>
-        <div >
-            Please see the <BrowserLink text="documentation" url="https://theia-ide.org/docs/user_getting_started/"
-                windowService={windowService} ></BrowserLink> on how to use the Theia IDE.
+        <div>
+            Learn more about building Discord bots with the Zumito Framework in
+            the <BrowserLink text="official documentation" url="https://github.com/zumito-team/zumito-framework"
+                windowService={windowService} />.
         </div>
     </div>;
 }
@@ -134,12 +154,10 @@ export function renderCollaboration(windowService: WindowService): React.ReactNo
         <h3 className='gs-section-header'>
             Collaboration
         </h3>
-        <div >
-            The IDE features a built-in collaboration feature.
-            You can share your workspace with others and work together in real-time by clicking on the <i>Collaborate</i> item in the status bar.
-            The collaboration feature is powered by
-            the <BrowserLink text="Open Collaboration Tools" url="https://www.open-collab.tools/" windowService={windowService} /> project
-            and uses their public server infrastructure.
+        <div>
+            Share your workspace and collaborate in real-time using the built-in
+            collaboration features powered by <BrowserLink text="Open Collaboration Tools"
+                url="https://www.open-collab.tools/" windowService={windowService} />.
         </div>
     </div>;
 }
@@ -147,15 +165,82 @@ export function renderCollaboration(windowService: WindowService): React.ReactNo
 export function renderDownloads(): React.ReactNode {
     return <div className='gs-section'>
         <h3 className='gs-section-header'>
-            Updates and Downloads
+            Updates
         </h3>
         <div className='gs-action-container'>
-            You can update Eclipse Theia IDE directly in this application by navigating to
-            File {'>'} Preferences {'>'} Check for Updates… Moreover the application will check for updates
-            after each launch automatically.
+            Update Zumito Studio directly via File {'>'} Preferences {'>'} Check for Updates…
+            The application will also check automatically after each launch.
         </div>
-        <div className='gs-action-container'>
-            Alternatively you can download the most recent version from the download page.
+    </div>;
+}
+
+/* ── Bento Box Components ── */
+
+export interface BentoCard {
+    icon: string;
+    title: string;
+    description: string;
+    command?: string;
+    className?: string;
+    badge?: string;
+    actionLabel?: string;
+    secondaryLabel?: string;
+    secondaryCommand?: string;
+    url?: string;
+}
+
+export function renderBentoGrid(
+    cards: BentoCard[],
+    executeCommand: (command: string) => void,
+    showSectionLabel?: string
+): React.ReactNode {
+    return <div>
+        {showSectionLabel && <div className='zb-section-label'>{showSectionLabel}</div>}
+        <div className='zb-grid'>
+            {cards.map((card, idx) => renderBentoCard(card, idx, executeCommand))}
         </div>
+    </div>;
+}
+
+export function renderBentoCard(
+    card: BentoCard,
+    key: number,
+    executeCommand: (command: string) => void
+): React.ReactNode {
+    const cls = `zb-card${card.className ? ' ' + card.className : ''}`;
+    const handleClick = () => {
+        if (card.command) {
+            executeCommand(card.command);
+        }
+    };
+
+    return <div key={key} className={cls} onClick={handleClick} role='button' tabIndex={0}
+        onKeyDown={(e: React.KeyboardEvent) => {
+            if ((e.key === 'Enter' || e.key === ' ') && (card.command || card.url)) {
+                e.preventDefault();
+                if (card.command) {
+                    executeCommand(card.command);
+                }
+            }
+        }}>
+        {card.url && <a href={card.url} target='_blank' rel='noreferrer' className='zb-card-link' />}
+        {card.badge && <span className='zb-card-badge'>{card.badge}</span>}
+        <span className={`zb-card-icon codicon ${card.icon}`} />
+        <span className='zb-card-title'>{card.title}</span>
+        <span className='zb-card-desc'>{card.description}</span>
+        {card.actionLabel && card.command && (
+            <div className='zb-hero-actions'>
+                <button onClick={(e) => { e.stopPropagation(); executeCommand(card.command!); }}>
+                    {card.actionLabel}
+                </button>
+                {card.secondaryLabel && card.secondaryCommand && (
+                    <button className='zb-action-secondary' onClick={(e) => {
+                        e.stopPropagation(); executeCommand(card.secondaryCommand!);
+                    }}>
+                        {card.secondaryLabel}
+                    </button>
+                )}
+            </div>
+        )}
     </div>;
 }

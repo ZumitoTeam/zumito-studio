@@ -1,0 +1,238 @@
+/* ─── Framework Inspector ─────────────────────────────── */
+
+.fi-container {
+    font-size: var(--theia-ui-font-size1, 13px);
+    color: var(--theia-foreground);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* ─── Header ─── */
+
+.fi-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 4px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--theia-toolbar-border, var(--theia-editorWidget-border));
+    user-select: none;
+}
+
+.fi-header .codicon-inspect {
+    font-size: 16px;
+}
+
+.fi-refresh {
+    margin-left: auto;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.fi-refresh:hover {
+    background: var(--theia-list-hoverBackground);
+}
+
+/* ─── Status ─── */
+
+.fi-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 4px;
+    font-size: var(--theia-ui-font-size0, 12px);
+}
+
+.fi-status-idle {
+    color: var(--theia-descriptionForeground);
+}
+
+.fi-hint {
+    padding: 8px 4px;
+    color: var(--theia-descriptionForeground);
+    font-size: var(--theia-ui-font-size0, 12px);
+    line-height: 1.5;
+}
+
+.fi-loading {
+    padding: 8px 4px;
+    color: var(--theia-descriptionForeground);
+    font-style: italic;
+}
+
+.fi-error {
+    padding: 8px 4px;
+    color: var(--theia-errorForeground);
+    font-size: var(--theia-ui-font-size0, 12px);
+}
+
+/* ─── Sections ─── */
+
+.fi-section {
+    border-bottom: 1px solid var(--theia-sideBarSectionHeader-border, var(--theia-editorWidget-border));
+}
+
+.fi-section-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 4px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+.fi-section-header:hover {
+    background: var(--theia-list-hoverBackground);
+}
+
+.fi-section-header .codicon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.fi-section-label {
+    flex: 1;
+}
+
+.fi-section-count {
+    background: var(--theia-badge-background);
+    color: var(--theia-badge-foreground);
+    font-size: var(--theia-ui-font-size0, 11px);
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.fi-section-body {
+    padding: 2px 0 4px 18px;
+}
+
+/* ─── Rows (Framework section) ─── */
+
+.fi-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 4px;
+    font-size: var(--theia-ui-font-size0, 12px);
+}
+
+.fi-label {
+    color: var(--theia-descriptionForeground);
+    min-width: 90px;
+    flex-shrink: 0;
+}
+
+.fi-value {
+    font-weight: 500;
+}
+
+/* ─── Entries (list items) ─── */
+
+.fi-entry {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 4px;
+    font-size: var(--theia-ui-font-size0, 12px);
+    border-radius: 2px;
+}
+
+.fi-entry:hover {
+    background: var(--theia-list-hoverBackground);
+}
+
+.fi-entry-name {
+    font-weight: 500;
+    font-family: var(--theia-monospace-fontFamily, monospace);
+    font-size: var(--theia-ui-font-size0, 12px);
+}
+
+.fi-entry-tag {
+    background: var(--theia-editorWidget-background);
+    border: 1px solid var(--theia-editorWidget-border);
+    border-radius: 3px;
+    padding: 0 4px;
+    font-size: 10px;
+    color: var(--theia-descriptionForeground);
+    text-transform: lowercase;
+    font-family: var(--theia-monospace-fontFamily, monospace);
+}
+
+.fi-tag-singleton {
+    background: var(--theia-list-activeSelectionBackground);
+    border-color: var(--theia-list-activeSelectionBackground);
+    color: var(--theia-list-activeSelectionForeground);
+}
+
+.fi-entry-meta {
+    color: var(--theia-descriptionForeground);
+    font-size: 10px;
+}
+
+/* ─── Badges ─── */
+
+.fi-badge {
+    font-size: 10px;
+    padding: 0 4px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.fi-badge-hidden {
+    background: var(--theia-inputValidation-warningBackground);
+    color: var(--theia-inputValidation-warningForeground, #000);
+}
+
+/* ─── Dots (status indicators) ─── */
+
+.fi-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.fi-dot-green {
+    background: #4caf50;
+}
+
+.fi-dot-red {
+    background: #f44336;
+}
+
+.fi-dot-yellow {
+    background: #ff9800;
+}
+
+.fi-dot-gray {
+    background: #9e9e9e;
+}
+
+/* ─── Empty state ─── */
+
+.fi-empty {
+    padding: 6px 4px;
+    color: var(--theia-descriptionForeground);
+    font-style: italic;
+    font-size: var(--theia-ui-font-size0, 12px);
+}
+
+/* ─── File path hint ─── */
+
+.fi-file-hint {
+    padding: 4px 4px 6px;
+    font-size: 10px;
+    color: var(--theia-descriptionForeground);
+    opacity: 0.7;
+    word-break: break-all;
+}

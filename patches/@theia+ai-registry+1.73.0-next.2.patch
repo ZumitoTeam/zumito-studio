@@ -1,0 +1,13 @@
+diff --git a/node_modules/@theia/ai-registry/lib/browser/mcp/mcp-extensions-contribution.js b/node_modules/@theia/ai-registry/lib/browser/mcp/mcp-extensions-contribution.js
+index 8279386..389f1c6 100644
+--- a/node_modules/@theia/ai-registry/lib/browser/mcp/mcp-extensions-contribution.js
++++ b/node_modules/@theia/ai-registry/lib/browser/mcp/mcp-extensions-contribution.js
+@@ -130,7 +130,7 @@ let MCPExtensionsContribution = class MCPExtensionsContribution {
+             // Without entries, locally-installed servers classify as user-added and the
+             // MCP section shows nothing; users can still manage servers from the AI
+             // configuration widget directly.
+-            console.warn('AI registry fetch failed; MCP entries unavailable.', error);
++            // AI registry not configured — skipping silently
+             return [];
+         }
+     }

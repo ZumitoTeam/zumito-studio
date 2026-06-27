@@ -5,6 +5,10 @@
   "description": "Zumito Studio - Custom IDE features for Zumito Framework",
   "dependencies": {
     "@theia/core": "1.73.0-next.2",
+    "@theia/editor": "1.73.0-next.2",
+    "@theia/filesystem": "1.73.0-next.2",
+    "@theia/monaco": "1.73.0-next.2",
+    "@theia/monaco-editor-core": "1.73.0-next.2",
     "@theia/navigator": "1.73.0-next.2",
     "@theia/plugin-ext": "1.73.0-next.2",
     "@theia/toolbar": "1.73.0-next.2",
@@ -18,6 +22,9 @@
   "theiaExtensions": [
     {
       "frontend": "lib/browser/zumito-frontend-module"
+    },
+    {
+      "backend": "lib/node/zumito-backend-module"
     }
   ],
   "scripts": {

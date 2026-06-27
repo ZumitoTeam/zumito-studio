@@ -21,12 +21,37 @@
         "applicationName": "Zumito Studio",
         "reloadOnReconnect": true,
         "preferences": {
-          "toolbar.showToolbar": true
+          "toolbar.showToolbar": true,
+          "workbench.colorCustomizations": {
+            "focusBorder": "#e11d48",
+            "button.background": "#e11d48",
+            "button.hoverBackground": "#be123c",
+            "progressBar.background": "#e11d48",
+            "list.activeSelectionBackground": "#e11d4833",
+            "list.activeSelectionForeground": "#e11d48",
+            "list.hoverBackground": "#e11d4815",
+            "list.inactiveSelectionBackground": "#e11d4820",
+            "inputOption.activeBorder": "#e11d48",
+            "inputOption.activeBackground": "#e11d4833",
+            "inputOption.activeForeground": "#e11d48",
+            "badge.background": "#e11d48",
+            "tab.activeBorderTop": "#e11d48",
+            "editor.selectionBackground": "#e11d4840",
+            "editorCursor.foreground": "#e11d48",
+            "editorLineNumber.activeForeground": "#e11d48",
+            "editorBracketMatch.border": "#e11d4860",
+            "sideBarTitle.foreground": "#f1f5f9",
+            "activityBar.activeBorder": "#e11d48",
+            "statusBar.background": "#e11d48",
+            "statusBar.foreground": "#ffffff",
+            "statusBar.noFolderBackground": "#e11d48",
+            "statusBarItem.activeBackground": "#ffffff33"
+          }
         },
         "electron": {
           "showWindowEarly": false,
           "splashScreenOptions": {
-            "content": "resources/TheiaIDESplash.svg",
+            "content": "resources/ZumitoSplash.svg",
             "height": 276,
             "width": 446
           }
@@ -125,6 +150,7 @@
     "theia-ide-launcher-ext": "1.72.100",
     "theia-ide-product-ext": "1.72.100",
     "theia-ide-updater-ext": "1.72.100",
+    "zumito-ai-opencode": "0.1.0",
     "zumito-ext": "0.1.0"
   },
   "devDependencies": {

@@ -1,0 +1,13 @@
+diff --git a/node_modules/@theia/core/lib/common/messaging/socket-write-buffer.js b/node_modules/@theia/core/lib/common/messaging/socket-write-buffer.js
+index f56d3db..60734c1 100644
+--- a/node_modules/@theia/core/lib/common/messaging/socket-write-buffer.js
++++ b/node_modules/@theia/core/lib/common/messaging/socket-write-buffer.js
+@@ -39,7 +39,7 @@ let SocketWriteBuffer = class SocketWriteBuffer {
+             this.bufferWritePosition = 0;
+         }
+         if (this.bufferWritePosition + byteLength > this.disconnectedBuffer.byteLength) {
+-            throw new Error(`Max disconnected buffer size exceeded by adding ${byteLength} bytes`);
++            this.drain();
+         }
+     }
+     flush(socket) {

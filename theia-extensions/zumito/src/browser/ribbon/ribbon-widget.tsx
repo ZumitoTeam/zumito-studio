@@ -6,6 +6,7 @@ interface RibbonButton {
     icon: string;
     label: string;
     command: string;
+    args?: unknown[];
 }
 
 interface RibbonGroup {
@@ -20,44 +21,64 @@ interface RibbonTab {
 
 const RIBBON_TABS: Record<string, RibbonTab> = {
     proyecto: {
-        label: 'Proyecto',
+        label: 'Project',
         groups: [
             {
-                label: 'Nuevo',
+                label: 'New',
                 buttons: [
-                    { icon: 'codicon codicon-file-directory', label: 'Crear Proyecto', command: 'zumito-cli.createProject' },
-                    { icon: 'codicon codicon-file-symlink', label: 'Crear Módulo', command: 'zumito-cli.createModule' },
+                    { icon: 'codicon codicon-file-directory', label: 'Create Project', command: 'zumito-cli.createProject' },
+                    { icon: 'codicon codicon-file-symlink', label: 'Create Module', command: 'zumito-cli.createModule' },
                 ]
             },
             {
-                label: 'Abrir',
+                label: 'Open',
                 buttons: [
-                    { icon: 'codicon codicon-folder-opened', label: 'Abrir Proyecto', command: 'workbench.action.files.openFolder' },
+                    { icon: 'codicon codicon-folder-opened', label: 'Open Project', command: 'workbench.action.files.openFolder' },
+                    { icon: 'codicon codicon-home', label: 'Welcome Screen', command: 'getting.started.widget' },
+                ]
+            },
+        ]
+    },
+    modulos: {
+        label: 'Modules',
+        groups: [
+            {
+                label: 'External Modules',
+                buttons: [
+                    { icon: 'codicon codicon-package', label: 'Manage Modules', command: 'zumito-cli.modules.configure' },
+                    { icon: 'codicon codicon-cloud-download', label: 'Install Module', command: 'zumito-cli.modules.install' },
+                    { icon: 'codicon codicon-globe', label: 'Explore Store', command: 'mini-browser.openUrl', args: ['https://modules.zumito.dev/modules'] },
                 ]
             },
             {
-                label: 'Componentes',
+                label: 'Bot Modules',
                 buttons: [
-                    { icon: 'codicon codicon-symbol-method', label: 'Crear Embed', command: 'zumito-cli.createEmbedBuilder' },
-                    { icon: 'codicon codicon-list-tree', label: 'Action Row', command: 'zumito-cli.createActionRowBuilder' },
-                ]
-            },
-            {
-                label: 'Herramientas',
-                buttons: [
-                    { icon: 'codicon codicon-wand', label: 'Inyectar Servicio', command: 'zumito-cli.injectService' },
+                    { icon: 'codicon codicon-plus', label: 'Create Module', command: 'zumito-cli.createModule' },
                 ]
             }
         ]
     },
     ejecutar: {
-        label: 'Ejecutar',
+        label: 'Run',
         groups: [
             {
-                label: 'Ejecución',
+                label: 'Execution',
                 buttons: [
-                    { icon: 'codicon codicon-play', label: 'Ejecutar', command: 'zumito-cli.runDev' },
-                    { icon: 'codicon codicon-debug', label: 'Ejecutar Debugger', command: 'zumito-cli.runDebug' },
+                    { icon: 'codicon codicon-play', label: 'Run', command: 'zumito-cli.runDev' },
+                    { icon: 'codicon codicon-debug', label: 'Run Debugger', command: 'zumito-cli.runDebug' },
+                ]
+            }
+        ]
+    },
+    herramientas: {
+        label: 'Tools',
+        groups: [
+            {
+                label: 'Development',
+                buttons: [
+                    { icon: 'codicon codicon-database', label: 'DB Explorer', command: 'zumito.dbExplorer.open' },
+                    { icon: 'codicon codicon-server', label: 'Discord Portal', command: 'zumito-cli.discordPortal' },
+                    { icon: 'codicon codicon-settings', label: 'Edit Config', command: 'zumito-cli.editConfig' },
                 ]
             }
         ]
@@ -96,7 +117,7 @@ export class RibbonWidget extends AbstractToolbarContribution {
                                         key={bi}
                                         className='zumito-ribbon-button'
                                         title={btn.label}
-                                        onClick={() => this.executeCommand(btn.command)}
+                                        onClick={() => this.executeCommand(btn.command, btn.args)}
                                     >
                                         <span className={btn.icon}></span>
                                         <span className='zumito-ribbon-button-label'>{btn.label}</span>
@@ -116,7 +137,7 @@ export class RibbonWidget extends AbstractToolbarContribution {
         this.didChangeEmitter.fire();
     }
 
-    protected executeCommand(command: string): void {
-        this.commandService.executeCommand(command);
+    protected executeCommand(command: string, args?: unknown[]): void {
+        this.commandService.executeCommand(command, ...(args ?? []));
     }
 }
