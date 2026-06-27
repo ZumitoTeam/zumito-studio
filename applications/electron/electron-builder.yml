@@ -66,9 +66,6 @@ nsis:
   menuCategory: true
   oneClick: false
   perMachine: false
-  installerHeaderIcon: resources/icons/WindowsLauncherIcons/ZumitoStudio.ico
-  installerIcon: resources/icons/WindowsLauncherIcons/ZumitoStudio.ico
-  uninstallerIcon: resources/icons/WindowsLauncherIcons/ZumitoStudio.ico
   installerSidebar: resources/icons/InstallerSidebarImage/164-314Windows.bmp
   uninstallerSidebar: resources/icons/InstallerSidebarImage/164-314Windows.bmp
   allowToChangeInstallationDirectory: true
