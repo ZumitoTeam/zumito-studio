@@ -6,7 +6,7 @@
   "version": "1.72.100",
   "main": "scripts/theia-electron-main.js",
   "license": "MIT",
-  "author": "Zumito",
+  "author": "Zumito <team@zumito.dev>",
   "homepage": "",
   "bugs": {},
   "repository": {},
