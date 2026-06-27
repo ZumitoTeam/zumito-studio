@@ -150,7 +150,6 @@
     "theia-ide-launcher-ext": "1.72.100",
     "theia-ide-product-ext": "1.72.100",
     "theia-ide-updater-ext": "1.72.100",
-    "zumito-ai-opencode": "0.1.0",
     "zumito-ext": "0.1.0"
   },
   "devDependencies": {
