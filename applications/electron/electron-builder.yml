@@ -1,6 +1,6 @@
-appId: eclipse.theia
-productName: TheiaIDE
-copyright: Copyright © 2020-2026 Eclipse Foundation, Inc
+appId: dev.zumito.studio
+productName: ZumitoStudio
+copyright: Copyright © 2026 Zumito
 electronDist: ../../node_modules/electron/dist
 electronVersion: 39.8.7
 asar: true
@@ -28,47 +28,47 @@ extraResources:
     to: app/plugins
 
 win:
-  icon: resources/icons/WindowsLauncherIcons/TheiaIDE.ico
+  icon: resources/icons/WindowsLauncherIcons/ZumitoStudio.ico
   target:
     - nsis
   publish:
     provider: generic
-    url: "https://download.eclipse.org/theia/ide/${version}/windows"
+    url: "https://github.com/ZumitoTeam/zumito-studio/releases/download/${version}/windows"
     useMultipleRangeRequest: false
 mac:
   icon: resources/icons/MacLauncherIcons/icon.icns
   category: public.app-category.developer-tools
   protocols:
-    - name: theia
+    - name: zumito-studio
       schemes:
-        - theia
+        - zumito-studio
   darkModeSupport: true
   target:
     - dmg
     - zip
   publish:
     provider: generic
-    url: "https://download.eclipse.org/theia/ide/latest/macos"
+    url: "https://github.com/ZumitoTeam/zumito-studio/releases/latest/download/macos"
 linux:
   icon: resources/icons/LinuxLauncherIcons
   category: Development
   mimeTypes:
     - inode/directory
-  vendor: Eclipse Foundation, Inc
+  vendor: Zumito
   target:
     - deb
     - AppImage
   publish:
     provider: generic
-    url: "https://download.eclipse.org/theia/ide/latest/linux"
+    url: "https://github.com/ZumitoTeam/zumito-studio/releases/latest/download/linux"
 
 nsis:
   menuCategory: true
   oneClick: false
   perMachine: false
-  installerHeaderIcon: resources/icons/WindowsLauncherIcons/TheiaIDE.ico
-  installerIcon: resources/icons/WindowsLauncherIcons/TheiaIDE.ico
-  uninstallerIcon: resources/icons/WindowsLauncherIcons/TheiaIDE.ico
+  installerHeaderIcon: resources/icons/WindowsLauncherIcons/ZumitoStudio.ico
+  installerIcon: resources/icons/WindowsLauncherIcons/ZumitoStudio.ico
+  uninstallerIcon: resources/icons/WindowsLauncherIcons/ZumitoStudio.ico
   installerSidebar: resources/icons/InstallerSidebarImage/164-314Windows.bmp
   uninstallerSidebar: resources/icons/InstallerSidebarImage/164-314Windows.bmp
   allowToChangeInstallationDirectory: true

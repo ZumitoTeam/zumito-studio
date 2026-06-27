@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "theia-ide-electron-app",
-  "description": "Zumito Studio",
+  "name": "zumito-studio-electron-app",
+  "description": "Zumito Studio — The IDE for building Discord bots",
   "productName": "Zumito Studio",
   "version": "1.72.100",
   "main": "scripts/theia-electron-main.js",
@@ -63,7 +63,7 @@
         "frontendConnectionTimeout": -1,
         "startupTimeout": -1,
         "resolveSystemPlugins": false,
-        "configurationFolder": ".theia-ide"
+        "configurationFolder": ".zumito-studio"
       }
     },
     "generator": {

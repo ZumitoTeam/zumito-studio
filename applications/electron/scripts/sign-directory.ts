@@ -149,7 +149,7 @@ async function execute(): Promise<void> {
     console.log('Notarizing application...');
     child_process.spawnSync(notarizeCommand, [
         path.basename(argv.directory),
-        'eclipse.theia'
+        'dev.zumito.studio'
     ], {
         cwd: path.dirname(argv.directory),
         maxBuffer: 1024 * 10000,
