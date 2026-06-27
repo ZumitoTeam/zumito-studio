@@ -230,11 +230,11 @@ export function renderBentoCard(
         <span className='zb-card-desc'>{card.description}</span>
         {card.actionLabel && card.command && (
             <div className='zb-hero-actions'>
-                <button onClick={(e) => { e.stopPropagation(); executeCommand(card.command!); }}>
+                <button onClick={e => { e.stopPropagation(); executeCommand(card.command!); }}>
                     {card.actionLabel}
                 </button>
                 {card.secondaryLabel && card.secondaryCommand && (
-                    <button className='zb-action-secondary' onClick={(e) => {
+                    <button className='zb-action-secondary' onClick={e => {
                         e.stopPropagation(); executeCommand(card.secondaryCommand!);
                     }}>
                         {card.secondaryLabel}
